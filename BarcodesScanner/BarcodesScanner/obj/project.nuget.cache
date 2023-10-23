@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "GNNVzOfo8wTM8vg/AtAJkKqCTr3rFVQPzB+vWE1QSU1hflfHcDwMqdJQQt/QBkjMdEyyKd2fNzUxxMSF9f+vKg==",
+  "success": true,
+  "projectFilePath": "G:\\My Drive\\Studia\\Studia_sem_5\\UP\\BarcodesScanner\\BarcodesScanner\\BarcodesScanner.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dzied\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
+    "C:\\Users\\dzied\\.nuget\\packages\\spire.barcode\\7.2.0\\spire.barcode.7.2.0.nupkg.sha512",
+    "C:\\Users\\dzied\\.nuget\\packages\\system.drawing.common\\6.0.0\\system.drawing.common.6.0.0.nupkg.sha512",
+    "C:\\Users\\dzied\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\dzied\\.nuget\\packages\\system.text.encoding.codepages\\6.0.0\\system.text.encoding.codepages.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
