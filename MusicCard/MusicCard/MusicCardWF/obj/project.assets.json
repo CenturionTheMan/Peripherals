@@ -1,0 +1,120 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0-windows7.0": {
+      "SlimDX/4.0.13.44": {
+        "type": "package",
+        "compile": {
+          "lib/NET40/SlimDX.dll": {}
+        },
+        "runtime": {
+          "lib/NET40/SlimDX.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SlimDX/4.0.13.44": {
+      "sha512": "Oj8ICZ3tIGvd93s5W6wSWXckDb3payQCo4fWp7GKPwnnGck7wEHHBZwnwfJJTdNb+t+IYr4HJCu07YhZ82xrIg==",
+      "type": "package",
+      "path": "slimdx/4.0.13.44",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/NET20/SlimDX.dll",
+        "lib/NET40/SlimDX.dll",
+        "slimdx.4.0.13.44.nupkg.sha512",
+        "slimdx.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0-windows7.0": [
+      "SlimDX >= 4.0.13.44"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\dzied\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "G:\\My Drive\\Studia\\Studia_sem_5\\UP\\Peripherals\\MusicCard\\MusicCard\\MusicCardWF\\MusicCardWF.csproj",
+      "projectName": "MusicCardWF",
+      "projectPath": "G:\\My Drive\\Studia\\Studia_sem_5\\UP\\Peripherals\\MusicCard\\MusicCard\\MusicCardWF\\MusicCardWF.csproj",
+      "packagesPath": "C:\\Users\\dzied\\.nuget\\packages\\",
+      "outputPath": "G:\\My Drive\\Studia\\Studia_sem_5\\UP\\Peripherals\\MusicCard\\MusicCard\\MusicCardWF\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\dzied\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0-windows"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net6.0-windows7.0": {
+          "targetAlias": "net6.0-windows",
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net6.0-windows7.0": {
+        "targetAlias": "net6.0-windows",
+        "dependencies": {
+          "SlimDX": {
+            "target": "Package",
+            "version": "[4.0.13.44, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          },
+          "Microsoft.WindowsDesktop.App.WindowsForms": {
+            "privateAssets": "none"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+      }
+    }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'SlimDX 4.0.13.44' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0-windows7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "SlimDX",
+      "targetGraphs": [
+        "net6.0-windows7.0"
+      ]
+    }
+  ]
+}
