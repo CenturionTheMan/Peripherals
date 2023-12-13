@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.3.32929.385
+VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicCardWF", "MusicCardWF\MusicCardWF.csproj", "{5D8731BE-4004-402A-ADA9-40D2BD29C51D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicCardNet", "MusicCardNet\MusicCardNet.csproj", "{008D3448-DF87-4B6D-8742-7EB116CA9CEC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicCard", "MusicCard\MusicCard.csproj", "{50FD5D37-6994-427D-A7A6-7FA663C4B644}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +13,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5D8731BE-4004-402A-ADA9-40D2BD29C51D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D8731BE-4004-402A-ADA9-40D2BD29C51D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D8731BE-4004-402A-ADA9-40D2BD29C51D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D8731BE-4004-402A-ADA9-40D2BD29C51D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{008D3448-DF87-4B6D-8742-7EB116CA9CEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{008D3448-DF87-4B6D-8742-7EB116CA9CEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{008D3448-DF87-4B6D-8742-7EB116CA9CEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{008D3448-DF87-4B6D-8742-7EB116CA9CEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50FD5D37-6994-427D-A7A6-7FA663C4B644}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50FD5D37-6994-427D-A7A6-7FA663C4B644}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50FD5D37-6994-427D-A7A6-7FA663C4B644}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50FD5D37-6994-427D-A7A6-7FA663C4B644}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {79425E94-C213-41DA-995A-ACD8395D023E}
+		SolutionGuid = {8EFA44BC-1DE5-4A15-8A21-DDDED9F44500}
 	EndGlobalSection
 EndGlobal
