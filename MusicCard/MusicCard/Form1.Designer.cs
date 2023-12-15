@@ -46,6 +46,8 @@
             timer = new System.Windows.Forms.Timer(components);
             timerTextBox = new TextBox();
             saveFileDialog = new SaveFileDialog();
+            headersRichTextBox = new RichTextBox();
+            echoCheckBox = new CheckBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -85,7 +87,7 @@
             // openFileDialog
             // 
             openFileDialog.FileName = "openFileDialog1";
-            openFileDialog.Filter = "WAVE|*.wav";
+            openFileDialog.Filter = "WAVE|*.wav|MP3|*.mp3";
             // 
             // loadFileButton
             // 
@@ -169,7 +171,7 @@
             // 
             // startRecordButton
             // 
-            startRecordButton.Location = new Point(12, 216);
+            startRecordButton.Location = new Point(12, 285);
             startRecordButton.Name = "startRecordButton";
             startRecordButton.Size = new Size(232, 29);
             startRecordButton.TabIndex = 2;
@@ -179,7 +181,7 @@
             // 
             // stopRecordButton
             // 
-            stopRecordButton.Location = new Point(12, 252);
+            stopRecordButton.Location = new Point(12, 321);
             stopRecordButton.Name = "stopRecordButton";
             stopRecordButton.Size = new Size(232, 29);
             stopRecordButton.TabIndex = 4;
@@ -194,7 +196,7 @@
             // timerTextBox
             // 
             timerTextBox.Font = new Font("Segoe UI", 25.8000011F, FontStyle.Regular, GraphicsUnit.Point);
-            timerTextBox.Location = new Point(250, 216);
+            timerTextBox.Location = new Point(250, 285);
             timerTextBox.Name = "timerTextBox";
             timerTextBox.ReadOnly = true;
             timerTextBox.Size = new Size(320, 65);
@@ -205,12 +207,33 @@
             // 
             saveFileDialog.Filter = "WAVE|*.wav";
             // 
+            // headersRichTextBox
+            // 
+            headersRichTextBox.Location = new Point(576, 12);
+            headersRichTextBox.Name = "headersRichTextBox";
+            headersRichTextBox.ReadOnly = true;
+            headersRichTextBox.Size = new Size(234, 338);
+            headersRichTextBox.TabIndex = 6;
+            headersRichTextBox.Text = "";
+            // 
+            // echoCheckBox
+            // 
+            echoCheckBox.AutoSize = true;
+            echoCheckBox.Location = new Point(12, 192);
+            echoCheckBox.Name = "echoCheckBox";
+            echoCheckBox.Size = new Size(70, 24);
+            echoCheckBox.TabIndex = 7;
+            echoCheckBox.Text = "ECHO";
+            echoCheckBox.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(586, 299);
+            ClientSize = new Size(822, 369);
+            Controls.Add(echoCheckBox);
+            Controls.Add(headersRichTextBox);
             Controls.Add(timerTextBox);
             Controls.Add(stopRecordButton);
             Controls.Add(startRecordButton);
@@ -248,5 +271,7 @@
         private System.Windows.Forms.Timer timer;
         private TextBox timerTextBox;
         private SaveFileDialog saveFileDialog;
+        private RichTextBox headersRichTextBox;
+        private CheckBox echoCheckBox;
     }
 }

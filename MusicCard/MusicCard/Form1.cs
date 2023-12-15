@@ -4,16 +4,23 @@ using SharpDX.Multimedia;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using NAudio.Wave;
+using System.Text;
+using SharpDX.XAPO;
+using SharpDX.XAPO.Fx;
+using System.Collections;
+using System.IO;
+using System.Globalization;
+
 
 namespace MusicCard;
 
 public partial class Form1 : Form
 {
-    //import winmm.dll do PlaySound()
+    //import winmm.dll - PlaySound()
     [DllImport("winmm.DLL", EntryPoint = "PlaySound", SetLastError = true, CharSet = CharSet.Unicode, ThrowOnUnmappableChar = true)]
     private static extern bool PlaySound(string pszSound, System.IntPtr hmod, PlaySoundFlags flags);
 
-    //flagi dla PlaySound()
+    //Flags for PlaySound()
     [System.Flags]
     public enum PlaySoundFlags : int
     {
@@ -27,13 +34,21 @@ public partial class Form1 : Form
         SND_RESOURCE = 0x00040004
     }
 
+    //loaded file
+    private string? filePath = null; 
 
-    private string? filePath = null;
+    //ActiveX
     SourceVoice? sourceVoice = null;
-    WaveOut waveOutDevice = new WaveOut(); //obiekt urządzenia
-    WaveIn? waveIn = null; //obiekt do nagrywania dźwięku
-    WaveFileWriter? waveWriter = null; //obiekt do obsługi nagrywania
-    AudioFileReader? audioFileReader = null; //obiekt do czytania z pliku
+    
+    //WaveForm - Play sound
+    WaveOut waveOutDevice = new WaveOut();
+    AudioFileReader? audioFileReader = null;
+
+    //WaveFOrm record
+    WaveIn? waveIn = null;
+    WaveFileWriter? waveWriter = null;     
+
+    //timer count
     long recordTime = 0;
 
     public Form1()
@@ -44,7 +59,11 @@ public partial class Form1 : Form
         stopRecordButton.Enabled = false;
     }
 
-
+    /// <summary>
+    /// Load data from open file dialog
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void loadFileButton_Click(object sender, EventArgs e)
     {
         var res = openFileDialog.ShowDialog();
@@ -52,20 +71,39 @@ public partial class Form1 : Form
 
         filePath = openFileDialog.FileName;
         loadedFileTextBox.Text = openFileDialog.SafeFileName;
+        if (openFileDialog.SafeFileName.ToLower().Contains(".wav"))
+            ShowWavHeaders(); //show headers
+        else
+            ShowMPEGHeaders(); //show headers
+
     }
 
+    /// <summary>
+    /// Play direct sound
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void playSoundDirectButton_Click(object sender, EventArgs e)
     {
         if (filePath == null) return;
         PlaySound(filePath, new System.IntPtr(), PlaySoundFlags.SND_ASYNC);
     }
 
-
+    /// <summary>
+    /// Stop direct sound
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void stopSoundDirectButton_Click(object sender, EventArgs e)
     {
-        PlaySound(null, (IntPtr)null, PlaySoundFlags.SND_ASYNC); //ustawienie ścieżki na NULL
+        PlaySound(null, (IntPtr)null, PlaySoundFlags.SND_ASYNC); //set path to null
     }
 
+    /// <summary>
+    /// ActiveX play sound
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void playSoundActiveButton_Click(object sender, EventArgs e)
     {
         if (filePath == null) return;
@@ -78,41 +116,50 @@ public partial class Form1 : Form
 
         try
         {
-            // Inicjalizacja XAudio2
             var xaudio = new XAudio2();
 
-            // Tworzenie głównego głosu
+            // master voice
             var masteringVoice = new MasteringVoice(xaudio);
 
-            // Wczytanie pliku dźwiękowego jako strumień
+            // read file as stream
             using (var fileStream = File.OpenRead(filePath))
             {
-                // Tworzenie głosu dla dźwięku
                 var soundStream = new SoundStream(fileStream);
                 var waveFormat = soundStream.Format;
                 var buffer = new AudioBuffer
                 {
                     Stream = soundStream.ToDataStream(),
                     AudioBytes = (int)soundStream.Length,
-                    Flags = BufferFlags.EndOfStream
+                    Flags = SharpDX.XAudio2.BufferFlags.EndOfStream
                 };
 
-                // Tworzenie głosu dla dźwięku
                 sourceVoice = new SourceVoice(xaudio, waveFormat, true);
+
+
+                if (echoCheckBox.Checked)
+                {
+                    var effectDes = new EffectDescriptor(new Echo(xaudio));
+                    sourceVoice.SetEffectChain(effectDes);
+                }
+
                 sourceVoice.SubmitSourceBuffer(buffer, soundStream.DecodedPacketsInfo);
                 soundStream.Dispose();
 
-                // Odtwarzanie dźwięku
                 sourceVoice.Start();
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Wystąpił błąd: {ex.Message}");
+            MessageBox.Show("ERROR!\n" + ex.Message);
         }
 
     }
 
+    /// <summary>
+    /// ActiveX stop sound
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void stopSoundActiveButton_Click(object sender, EventArgs e)
     {
         if (sourceVoice == null) return;
@@ -120,6 +167,11 @@ public partial class Form1 : Form
         sourceVoice.Dispose();
     }
 
+    /// <summary>
+    /// WaveForm play sound
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void playSoundWaveButton_Click(object sender, EventArgs e)
     {
         if (audioFileReader != null)
@@ -130,21 +182,31 @@ public partial class Form1 : Form
         }
 
         audioFileReader = new(filePath);
-        waveOutDevice.Init(audioFileReader); //przekazanie pliku WAV do inicjacji
+        waveOutDevice.Init(audioFileReader);
 
-        waveOutDevice.Play(); //odtworzenie dźwięku
+        waveOutDevice.Play();
     }
 
+    /// <summary>
+    /// WaveForm stop sound
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void stopSoundWaveButton_Click(object sender, EventArgs e)
     {
         if (audioFileReader == null) return;
 
         waveOutDevice.Stop();
-        audioFileReader.Close(); //zamknięcie strumienia danych
+        audioFileReader.Close();
 
         audioFileReader = null;
     }
 
+    /// <summary>
+    /// Timer update for recording
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void timer_Tick(object sender, EventArgs e)
     {
         recordTime += 100;
@@ -155,6 +217,11 @@ public partial class Form1 : Form
 
     }
 
+    /// <summary>
+    /// Start recording 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void startRecordButton_Click(object sender, EventArgs e)
     {
         if(saveFileDialog.ShowDialog() != DialogResult.OK) return;
@@ -163,15 +230,20 @@ public partial class Form1 : Form
         timer.Start();
 
         waveIn = new();
-        waveIn.WaveFormat = new NAudio.Wave.WaveFormat(44100, 1); //ustawienie formatu pliku
+        waveIn.WaveFormat = new NAudio.Wave.WaveFormat(44100, 1); //set file format
         waveIn.DataAvailable += new EventHandler<WaveInEventArgs>(waveInSafeRecord);
-        waveWriter = new WaveFileWriter(saveFileDialog.FileName, waveIn.WaveFormat); //zapisywanie danych do pliku
+        waveWriter = new WaveFileWriter(saveFileDialog.FileName, waveIn.WaveFormat); //save to file
 
-        waveIn.StartRecording(); //rozpoczęcie nagrywania
+        waveIn.StartRecording();
         startRecordButton.Enabled = false;
         stopRecordButton.Enabled = true;
     }
 
+    /// <summary>
+    /// Update wav file while recording
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void waveInSafeRecord(object sender, WaveInEventArgs e)
     {
         if (waveWriter != null)
@@ -181,9 +253,14 @@ public partial class Form1 : Form
         }
     }
 
-
+    /// <summary>
+    /// Stop recording
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void stopRecordButton_Click(object sender, EventArgs e)
     {
+        if (waveIn == null || waveWriter == null) return;
         timer.Stop();
 
         waveIn.StopRecording();
@@ -193,4 +270,120 @@ public partial class Form1 : Form
         startRecordButton.Enabled = true;
         stopRecordButton.Enabled = false;
     }
+
+    /// <summary>
+    /// Show headers
+    /// </summary>
+    private void ShowWavHeaders()
+    {
+        if (filePath == null) return;
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+
+        using (var binaryReader = new BinaryReader(fileStream))
+        {
+            try
+            {
+                //https://docs.fileformat.com/pl/audio/wav/#google_vignette
+                stringBuilder.AppendLine($"RIFF ->{ByteArrToString(binaryReader.ReadBytes(4))}");
+                stringBuilder.AppendLine($"File size -> {binaryReader.ReadUInt32()}");
+                stringBuilder.AppendLine($"File type -> {ByteArrToString(binaryReader.ReadBytes(4))}");
+                stringBuilder.AppendLine($"Format chunk marker -> {ByteArrToString(binaryReader.ReadBytes(4))}");
+                stringBuilder.AppendLine($"Length of format data as listed above -> {binaryReader.ReadUInt32()}");
+                stringBuilder.AppendLine($"Type of format -> {binaryReader.ReadUInt16()}");
+                stringBuilder.AppendLine($"Number of Channels -> {binaryReader.ReadUInt16()}");
+                stringBuilder.AppendLine($"Sample rate -> {binaryReader.ReadUInt32()}");
+                stringBuilder.AppendLine($"Byte per sec -> {binaryReader.ReadUInt32()}");
+                stringBuilder.AppendLine($"Bits per sample -> {binaryReader.ReadUInt16()}");
+                binaryReader.ReadUInt16();
+                stringBuilder.AppendLine($"Data ID -> {ByteArrToString(binaryReader.ReadBytes(4))}");
+                stringBuilder.AppendLine($"Data size -> {binaryReader.ReadUInt32()}");
+            }
+            finally
+            {
+                binaryReader.Close();
+                fileStream.Close();
+            }
+        }
+
+        headersRichTextBox.Text = stringBuilder.ToString();
+    }
+
+    private void ShowMPEGHeaders()
+    {
+        if (filePath == null) return;
+
+        string res = "";
+
+        using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+        {
+            using (var binaryReader = new BinaryReader(fileStream))
+            {
+                try
+                {
+                    var bytes = binaryReader.ReadBytes(4);
+                    var bits = new BitArray(bytes);
+                    res += $"Frame synchronizer: {BitArrIntoString(bits, 0, 10)}\n";
+                    res += $"MPEG version ID: {BitArrIntoString(bits, 11, 12)}\n";
+                    res += $"Layer: {BitArrIntoString(bits, 13, 14)}\n";
+                    res += $"CRC Protection: {BitArrIntoString(bits, 15, 15)}\n";
+                    res += $"Bitrate index: {BitArrIntoString(bits, 16, 19)}\n";
+                    res += $"Samplig rate frequency index: {BitArrIntoString(bits, 20, 21)}\n";
+                    res += $"Padding: {BitArrIntoString(bits, 22, 22)}\n";
+                    res += $"Private bit: {BitArrIntoString(bits, 23, 23)}\n";
+                    res += $"Channel: {BitArrIntoString(bits, 24, 25)}\n";
+                    res += $"Mode extension: {BitArrIntoString(bits, 26, 27)}\n";
+                    res += $"Copyright: {BitArrIntoString(bits, 28, 28)}\n";
+                    res += $"Original: {BitArrIntoString(bits, 29, 29)}\n";
+                    res += $"Emphasis: {BitArrIntoString(bits, 30, 31)}\n";
+                    res += "\n\n";
+                }
+                finally
+                {
+                    binaryReader.Close();
+                }
+            }
+
+            //byte[] data = new byte[128];
+            //fileStream.Seek(-128, SeekOrigin.End);
+            //fileStream.Read(data, 0, 128);
+            //fileStream.Close();
+
+            //res += $"Tag identification: {ByteArrToString(data,0,127)}";
+
+        }
+
+
+        headersRichTextBox.Text = res;
+    }
+
+    private string BitArrIntoString(BitArray bitArray, int from, int to)
+    {
+        string res = "";
+        for (int i = from; i <= to; i++)
+        {
+            res += bitArray[i] ? "1" : "0";
+        }
+        return res;
+    }
+
+    private string ByteArrToString(byte[] bytes, int from, int to)
+    {
+        StringBuilder stringBuilder = new();
+        for (int i = from; i <= to; i++)
+        {
+            var tmp = Convert.ToChar(bytes[i]);
+            stringBuilder.Append(tmp);
+        }
+        return stringBuilder.ToString();
+    }
+
+    private string ByteArrToString(byte[] bytes)
+    {
+        return Encoding.Default.GetString(bytes);
+    }
+
+
 }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Pa3xBUwRjF+xbUeRn3Iq621LEkngl6BG1R06kEXfSNcZ1veOi01KFsGsogrrO4HhcEEIWqNG6zC5HD51+Xnihg==",
+  "dgSpecHash": "gmts9FUeva6csra2LutVu7GZaw96tLvX1a1VuYQVZ27tg+EZd9ezOIK2NHJmsS48kMwMuGn8sStJBo17deFGWg==",
   "success": true,
   "projectFilePath": "D:\\GoogleDriveMirror\\Studia\\Studia_sem_5\\UP\\Peripherals\\MusicCard\\MusicCard\\MusicCard.csproj",
   "expectedPackageFiles": [
@@ -88,7 +88,8 @@
     "C:\\Users\\dzied\\.nuget\\packages\\system.threading.tasks.extensions\\4.3.0\\system.threading.tasks.extensions.4.3.0.nupkg.sha512",
     "C:\\Users\\dzied\\.nuget\\packages\\system.threading.timer\\4.3.0\\system.threading.timer.4.3.0.nupkg.sha512",
     "C:\\Users\\dzied\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
-    "C:\\Users\\dzied\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
+    "C:\\Users\\dzied\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
+    "C:\\Users\\dzied\\.nuget\\packages\\taglibsharp\\2.3.0\\taglibsharp.2.3.0.nupkg.sha512"
   ],
   "logs": []
 }

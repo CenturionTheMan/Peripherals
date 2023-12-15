@@ -47,6 +47,10 @@
             "SharpDX.XAudio2": {
               "target": "Package",
               "version": "[4.2.0, )"
+            },
+            "TagLibSharp": {
+              "target": "Package",
+              "version": "[2.3.0, )"
             }
           },
           "imports": [

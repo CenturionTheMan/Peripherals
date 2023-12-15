@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MusicCard")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb83be56f7c8761ef112d5157a3c99b1ab3826c8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4a5e8d2bc67ea257565efd8f6c3f3e833a30d24f")]
 [assembly: System.Reflection.AssemblyProductAttribute("MusicCard")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MusicCard")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

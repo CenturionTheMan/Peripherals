@@ -26,3 +26,4 @@ D:\GoogleDriveMirror\Studia\Studia_sem_5\UP\Peripherals\MusicCard\MusicCard\obj\
 D:\GoogleDriveMirror\Studia\Studia_sem_5\UP\Peripherals\MusicCard\MusicCard\obj\Debug\net6.0-windows\MusicCard.pdb
 D:\GoogleDriveMirror\Studia\Studia_sem_5\UP\Peripherals\MusicCard\MusicCard\obj\Debug\net6.0-windows\MusicCard.genruntimeconfig.cache
 D:\GoogleDriveMirror\Studia\Studia_sem_5\UP\Peripherals\MusicCard\MusicCard\obj\Debug\net6.0-windows\ref\MusicCard.dll
+D:\GoogleDriveMirror\Studia\Studia_sem_5\UP\Peripherals\MusicCard\MusicCard\bin\Debug\net6.0-windows\TagLibSharp.dll
